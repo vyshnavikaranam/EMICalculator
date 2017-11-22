@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>EMI Calculator</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container" style="padding-left:250px;padding-right:250px">
+		<div class="page-header" align="center">
+		<h2><strong>EMI CALCULATOR</strong></h2>
+		</div><br>
+		<script src="jsFunctions.js"></script>
+		<ul class="nav nav-tabs">
+		    <li class="active"><a data-toggle="tab" href="#home"><b>EMI Calculator</b></a></li>
+		    <li><a data-toggle="tab" href="#menu1"><b>Pre-Payment</b></a></li>
+		    <li><a data-toggle="tab" href="#menu2"><b>Fore Closure</b></a></li>
+		 </ul>		
+		 <div class="tab-content">
+		 	<div id="home" class="tab-pane fade in active">
+		    	<br><br>
+		    	<form action="EMIAmount" method="get" name="EMIForm">
+					<div class="form-group">
+						<label for="usr">Loan Amount:</label>
+					  	<input type="text" class="form-control" name="loanAmount" required />
+					</div>
+					<div class="form-group">
+						<label for="usr">Interest in %:</label>
+					  	<input type="text" class="form-control" name="interest" required />
+					</div>
+					<div class="form-group">
+						<label class="radio-inline"><input type="radio" onclick="fixed()" name="optradio1" id="floatingRadio" value="Fixed Interest" required>Fixed Interest</label>
+						<label class="radio-inline"><input type="radio" onclick="floating()" name="optradio1" id="floatingRadio0" value="Floating Interest" required>Floating Interest</label>
+					</div>
+					<div class="form-group" id="floating1" style="display:none">
+						<label for="usr">New Interest:</label>
+						<input type="text" class="form-control" name="newInterest" id="newInterest" />
+					</div>
+					<div class="form-group" id="floating2" style="display:none">
+						<label for="usr">Interest change after ___ months:</label>
+						<input type="text" class="form-control" name="timeBeforeInterestChange" id="timeBeforeInterestChange" />
+					</div>
+					<div class="form-group" id="floating3" style="display:none">
+						<label class="radio-inline"><input type="radio" onclick="sameTenure()" name="optradio2" id="floatingRadio1" value="Change EMI, Same Tenure" />Change EMI, Same Tenure</label>
+						<label class="radio-inline"><input type="radio" onclick="sameEMI()" name="optradio2" id="floatingRadio2" value="Change Tenure, Same EMI" />Change Tenure, Same EMI</label>
+					</div>
+					<div class="form-group">
+						<label for="usr">Tenure (in months):</label>
+						<input type="text" class="form-control" name="tenure" required />
+					</div>
+					<div class="form-group">
+						<label for="usr">Payments per year:</label>
+						<input type="text" class="form-control" name="paymentsPerYear" required />
+					</div>
+					<div class="form-group" style="display:none;" id="installmentField">
+						<label for="usr">Installment No:</label>
+						<input type="text" class="form-control" name="installmentNo" id="installmentNo">
+					</div>
+					<br>
+					<div align="center">
+						<input type="submit" style="display:none;font-weight:700;font-size:13px" class="btn btn-primary" id="submitButton" value="Submit" name="operation">
+						<input type="submit" class="btn btn-primary" style="font-weight:700;font-size:13px" id="cemi" value="Calculate EMI" name="operation">
+						<input type="submit" class="btn btn-primary" style="font-weight:700;font-size:13px" id="rs" value="Repayment Schedule" name="operation">
+						<input type="button" class="btn btn-primary" style="font-weight:700;font-size:13px" id="pc" onclick="principalComponent()" value="Individual Installment Details">
+						<input type="reset" onclick="resetAll()" class="btn btn-warning" style="font-weight:700;font-size:13px" style="display:inline" value="Reset" id="reset">
+					</div>
+				</form>
+		    </div>
+		    <div id="menu1" class="tab-pane fade">
+				<br><br>
+		    	<form action="Prepayment" method="get" name="PrepaymentForm">
+					<div class="form-group">
+					  <label for="usr">Loan Amount:</label>
+					  <input type="text" class="form-control" name="loanAmount" required />
+					</div>
+					<div class="form-group">
+					  <label for="usr">Interest in %:</label>
+					  <input type="text" class="form-control" name="interest" required />
+					</div>
+					<div class="form-group">
+					  <label for="usr">Tenure (in months):</label>
+					  <input type="text" class="form-control" name="tenure" required />
+					</div>
+					<div class="form-group">
+					  <label for="usr">Payments per year:</label>
+					  <input type="text" class="form-control" name="paymentsPerYear" required />
+					</div>
+					<div class="form-group">
+					  <label for="usr">Pre-Payment Amount:</label>
+					  <input type="text" class="form-control" name="prepaymentAmount" required />
+					</div>
+					<div class="form-group">
+					  <label for="usr">Pre-payment done after __ months:</label>
+					  <input type="text" class="form-control" name="prepaymentMonths" required />
+					</div>
+					<br>
+					<div align="center">
+						<input type="submit" class="btn btn-primary" style="font-weight:700;font-size:13px" id="rs" value="Repayment Schedule" name="operation">
+						<input type="reset" class="btn btn-warning" style="font-weight:700;font-size:13px" style="display:inline" value="Reset" id="reset">
+					</div>
+				</form>
+		    </div>
+		    <div id="menu2" class="tab-pane fade">
+				<br>
+		    	<br>
+		    	<form action="ForeClosure" method="get" name="PrepaymentForm">
+					<div class="form-group">
+					  <label for="usr">Loan Amount:</label>
+					  <input type="text" class="form-control" name="loanAmount" required />
+					</div>
+					<div class="form-group">
+					  <label for="usr">Interest in %:</label>
+					  <input type="text" class="form-control" name="interest" required />
+					</div>
+					<div class="form-group">
+					  <label for="usr">Tenure (in months):</label>
+					  <input type="text" class="form-control" name="tenure" required />
+					</div>
+					<div class="form-group">
+					  <label for="usr">Payments per year:</label>
+					  <input type="text" class="form-control" name="paymentsPerYear" required />
+					</div>
+					<div class="form-group">
+					  <label for="usr">Months before Fore Closure:</label>
+					  <input type="text" class="form-control" name="foreclosureMonths" required />
+					</div>
+					<br>
+					<div align="center">
+						<input type="submit" class="btn btn-primary" style="font-weight:700;font-size:13px" id="rs" value="Repayment Schedule" name="operation">
+						<input type="reset" class="btn btn-warning" style="font-weight:700;font-size:13px" style="display:inline" value="Reset" id="reset">
+					</div>
+				</form>
+		    </div>
+		  </div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</div>
+</body>
+</html>

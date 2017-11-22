@@ -1,2 +1,2 @@
 # EMICalculator
-EMICalculator is a dynamic web application built using Java 7. It also uses JavaScript &amp; Bootstrap.
+The EMICalculator is a dynamic web application built using Servlets. And it's frontend uses Bootstrap and JavaScript.
